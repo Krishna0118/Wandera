@@ -29,6 +29,10 @@ const listingSchema = new Schema({
             ref : "Review",
         },
     ],
+    owner:{
+        type: Schema.Types.ObjectId,
+        ref:"User",
+    },
 });
 
 //mongoose middleware handling listing delete than review also get deleted
