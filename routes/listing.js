@@ -4,24 +4,21 @@ const Listing = require("../models/listing.js"); // import your Listing model
 const wrapAsync = require("../utils/wrapAsync.js"); // import wrapAsync function
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingController = require("../controllers/listing.js");
+const multer  = require('multer')
+const {storage} = require("../cloudConfig.js");
+const upload = multer({ storage});
 
 router
   .route("/")
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
-    (req, res, next) => {
-      // Convert image string to object early
-      const img = req.body.listing.image;
-      req.body.listing.image = {
-        url: img || undefined,
-        filename: "listingimage"
-      };
-      next();
-    },
+    upload.single('listing[image]'),
     validateListing,
+    
     wrapAsync(listingController.createListing)
   );
+ 
 
   //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForn);
@@ -34,6 +31,7 @@ router
   .put(
     isLoggedIn,
     isOwner,
+    upload.single('listing[image]'),
     validateListing,
     wrapAsync(listingController.updateListing)
   )
