@@ -19,6 +19,8 @@ router
     wrapAsync(listingController.createListing)
   );
  
+  router.get("/search", wrapAsync(listingController.searchListings));
+
 
   //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForn);
@@ -41,6 +43,7 @@ router
 
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm));
+
 
 
 

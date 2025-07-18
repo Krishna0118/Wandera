@@ -4,6 +4,7 @@
     <div class="col-8 offset-2">
       <h3>Create a new listing</h3>
       <form class = "needs-validation" method="POST" action="/listings" novalidate enctype="multipart/form-data">
+        
         <div class="mb-3">
           <label for="title" class="form-label">Enter title</label>
           <input
@@ -37,6 +38,23 @@
             class="form-control"
             required
           />
+          <div class="mb-3">
+  <label for="category" class="form-label">Category</label>
+  <select name="listing[category]" class="form-select" required>
+    <option value="">Choose a category</option>
+    <option value="Trending">Trending</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Castles">Castles</option>
+    <option value="Mountains">Mountains</option>
+    <option value="Amazing Pools">Amazing Pools</option>
+    <option value="Camping">Camping</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+  </select>
+  <div class="invalid-feedback">Please select a category</div>
+</div>
+
           
         </div>
         <div class="row">

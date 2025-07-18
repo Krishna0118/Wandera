@@ -1,28 +1,172 @@
 <% layout('/layouts/boilerplate') -%>
 
-<h3>All listing</h3>
-<!-- <form method="GET" action="/listings/new">
-   <button>Create new listing</button> 
-</form> -->
+<style>
+  /* FILTERS */
+  #filters {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+  }
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-  <% for(let listing of allListings) { %>
-  <a href = "/listings/<%= listing._id %>" class = "listing-link">
-    <div class="card col listing-card">
-      <img
-        src="<%= listing.image.url %>"
-        class="card-img-top"
-        alt="listing image"
-        style="height: 20rem"
-      />
-      <div class="card-img-overlay"></div>
-      <div class="card-body">
-        <p class="card-text">
-          <b><%= listing.title %></b> <br />
-          &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
-        </p>
-      </div>
-    </div>
+  .filter {
+    flex: 0 0 auto;
+    text-align: center;
+    color: #444;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+
+  .filter i {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .filter p {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+.filter.active {
+  opacity: 1;
+  border-bottom: 2px solid #000;
+}
+
+  /* LISTINGS */
+  .listing-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .listing-card {
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .listing-card:hover {
+    transform: scale(1.015);
+  }
+
+  .card-img-top {
+    object-fit: cover;
+    height: 20rem;
+  }
+
+  .card-body {
+    padding: 0.75rem 1rem;
+    background-color: #fff;
+  }
+
+  .card-text {
+    font-size: 1rem;
+  }
+
+  .card-text b {
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    #filters {
+      gap: 1rem;
+    }
+
+    .card-img-top {
+      height: 16rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-text {
+      font-size: 0.9rem;
+    }
+
+    .card-text b {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div id="filters">
+<div id="filters">
+
+  <a href="/listings" class="filter">
+  <div><i class="fa-solid fa-border-all"></i></div>
+  <p>All</p>
+</a>
+
+  <a href="/listings?category=Trending" class="filter <%= category === 'Trending' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
   </a>
+  <a href="/listings?category=Rooms" class="filter <%= category === 'Rooms' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </a>
+  <a href="/listings?category=Iconic Cities" class="filter <%= category === 'Iconic Cities' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
+    <p>Iconic Cities</p>
+  </a>
+  <a href="/listings?category=Castles" class="filter <%= category === 'Castles' ? 'active' : '' %>">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
+    <p>Castles</p>
+  </a>
+  <a href="/listings?category=Mountains" class="filter <%= category === 'Mountains' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-mountain"></i></div>
+    <p>Mountains</p>
+  </a>
+  <a href="/listings?category=Amazing Pools" class="filter <%= category === 'Amazing Pools' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Amazing Pools</p>
+  </a>
+  <a href="/listings?category=Camping" class="filter <%= category === 'Camping' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Camping</p>
+  </a>
+  <a href="/listings?category=Farms" class="filter <%= category === 'Farms' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-cow"></i></div>
+    <p>Farms</p>
+  </a>
+  <a href="/listings?category=Arctic" class="filter <%= category === 'Arctic' ? 'active' : '' %>">
+    <div><i class="fa-regular fa-snowflake"></i></div>
+    <p>Arctic</p>
+  </a>
+</div>
+
+</div>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+  <% for(let listing of allListings) { %>
+    <a href="/listings/<%= listing._id %>" class="listing-link">
+      <div class="card col listing-card">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="listing image"
+        />
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b>
+            ₹<%= listing.price.toLocaleString("en-IN") %>/night
+          </p>
+        </div>
+      </div>
+    </a>
   <% } %>
 </div>
