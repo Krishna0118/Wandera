@@ -1,0 +1,103 @@
+<% layout('/layouts/boilerplate') -%>
+
+<style>
+  .hero {
+    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 1.5rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+    padding: 0 1rem;
+  }
+
+  .hero h1 {
+    font-size: 3.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+
+  .hero p {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+
+  .hero a.btn {
+    padding: 0.75rem 1.8rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hero a.btn:hover {
+    transform: scale(1.05);
+    background-color: #f8f9fa;
+    color: #000;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: 70vh;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .hero a.btn {
+      font-size: 1rem;
+      padding: 0.6rem 1.4rem;
+    }
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Escape Ordinary. Stay Extraordinary.</h1>
+    <p>Discover handpicked stays in scenic towns, cozy retreats, and vibrant cities — wherever you wander, we've got you covered.</p>
+    <a href="/listings" class="btn btn-light">Explore Listings</a>
+  </div>
+</div>
+
+<div class="container text-center mt-5 mb-5">
+  <% if (!currUser) { %>
+    <div class="mt-4">
+      <a href="/signup" class="btn btn-outline-primary me-2">Sign Up</a>
+      <a href="/login" class="btn btn-outline-success">Login</a>
+    </div>
+  <% } else { %>
+    <p class="mt-4">Logged in as <b><%= currUser.username %></b></p>
+  <% } %>
+</div>
